@@ -6,7 +6,6 @@ import TokenEntity from '../src/application/core/data/entities/TokenEntity';
 import { TEST_TOKEN } from '../src/application/core/config/constants';
 
 export default class UserSeeder implements BaseSeeder {
-
   protected userRepository: Repository<UserEntity>;
 
   constructor() {
@@ -19,7 +18,6 @@ export default class UserSeeder implements BaseSeeder {
   }
 
   async seed() {
-
     const user = new UserEntity();
     const token = new TokenEntity();
     const userModel = new User();
@@ -32,7 +30,7 @@ export default class UserSeeder implements BaseSeeder {
     await userModel.setPassword('123');
     user.password = userModel.password;
     user.email = 'devs@mycompany.com';
-    const savedUser =  await this.userRepository.save(user);
+    const savedUser = await this.userRepository.save(user);
 
     token.createdAt = new Date();
     token.updatedAt = new Date();
@@ -41,7 +39,5 @@ export default class UserSeeder implements BaseSeeder {
     token.user = savedUser;
 
     await getRepository(TokenEntity).save(token);
-
   }
-
 }

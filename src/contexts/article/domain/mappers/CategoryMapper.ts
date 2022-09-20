@@ -3,9 +3,10 @@ import ObjectMapper from '../../../../application/core/mappers/base/ObjectMapper
 import CategoryEntity from '../../../../application/core/data/entities/CategoryEntity';
 import Category from '../models/Category';
 
-export default class CategoryMapper extends
-  EntityMapper<CategoryEntity, Category> implements ObjectMapper<CategoryEntity, Category> {
-
+export default class CategoryMapper
+  extends EntityMapper<CategoryEntity, Category>
+  implements ObjectMapper<CategoryEntity, Category>
+{
   map(from: CategoryEntity): Category {
     if (from && from.id) {
       const category: Category = new Category();
@@ -14,7 +15,6 @@ export default class CategoryMapper extends
       category.icon = from.icon;
       category.id = from.id;
       return category;
-
     }
   }
 
@@ -26,8 +26,6 @@ export default class CategoryMapper extends
       category.icon = to.icon;
       category.id = to.id;
       return category;
-
     }
   }
-
 }

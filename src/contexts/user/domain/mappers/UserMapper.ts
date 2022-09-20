@@ -4,8 +4,9 @@ import User from '../models/User';
 import UserEntity from '../../../../application/core/data/entities/UserEntity';
 
 export default class UserMapper
-  extends EntityMapper<UserEntity, User> implements ObjectMapper<UserEntity, User> {
-
+  extends EntityMapper<UserEntity, User>
+  implements ObjectMapper<UserEntity, User>
+{
   map(from: UserEntity): User {
     if (from && from.id) {
       const user: User = new User();
@@ -32,8 +33,6 @@ export default class UserMapper
       user.password = to.password;
       user.username = to.username;
       return user;
-
     }
   }
-
 }

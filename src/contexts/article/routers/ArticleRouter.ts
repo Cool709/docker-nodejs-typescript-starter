@@ -8,8 +8,10 @@ import Request from '../../../application/utils/extended/Request';
 
 export class ArticleRouter extends BaseRouter {
   constructor(
-    route: string, private articleController: ArticleController,
-    private tokenMiddleware: BaseMiddleware) {
+    route: string,
+    private articleController: ArticleController,
+    private tokenMiddleware: BaseMiddleware
+  ) {
     super(route, false);
     this.addRoutes();
   }
@@ -22,15 +24,23 @@ export class ArticleRouter extends BaseRouter {
 
   index(): RequestHandler {
     return (req: Request, res: Response, next: NextFunction) => {
-      this.articleController.index()
-        .then(articles => ResponseHandler.sendResponse(res, httpCodes.OK, 'articles', articles))
-        .catch(err => ResponseHandler.sendError(res, err));
+      this.articleController
+        .index()
+        .then((articles) =>
+          ResponseHandler.sendResponse(res, httpCodes.OK, 'articles', articles)
+        )
+        .catch((err) => ResponseHandler.sendError(res, err));
     };
   }
 
   me(): RequestHandler {
     return (req: Request, res: Response, next: NextFunction) => {
-      return ResponseHandler.sendResponse(res, httpCodes.OK, 'article', req.User);
+      return ResponseHandler.sendResponse(
+        res,
+        httpCodes.OK,
+        'article',
+        req.User
+      );
     };
   }
 }

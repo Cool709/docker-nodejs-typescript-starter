@@ -7,8 +7,11 @@ import { httpCodes } from '../../../application/core/ErrorCodes';
 import Request from '../../../application/utils/extended/Request';
 
 export class CategoryRouter extends BaseRouter {
-  constructor(route: string, private categoryController: CategoryController,
-              private tokenMiddlewate: BaseMiddleware) {
+  constructor(
+    route: string,
+    private categoryController: CategoryController,
+    private tokenMiddlewate: BaseMiddleware
+  ) {
     super(route, false);
     this.addRoutes();
   }
@@ -20,9 +23,12 @@ export class CategoryRouter extends BaseRouter {
 
   index(): RequestHandler {
     return (req: Request, res: Response, next: NextFunction) => {
-      this.categoryController.index()
-        .then(category => ResponseHandler.sendResponse(res, httpCodes.OK, 'category', category))
-        .catch(err => ResponseHandler.sendError(res, err));
+      this.categoryController
+        .index()
+        .then((category) =>
+          ResponseHandler.sendResponse(res, httpCodes.OK, 'category', category)
+        )
+        .catch((err) => ResponseHandler.sendError(res, err));
     };
   }
 }

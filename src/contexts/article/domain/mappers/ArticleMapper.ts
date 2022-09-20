@@ -4,8 +4,9 @@ import Article from '../models/Article';
 import ArticleEntity from '../../../../application/core/data/entities/ArticleEntity';
 
 export default class ArticleMapper
-  extends EntityMapper<ArticleEntity, Article> implements ObjectMapper<ArticleEntity, Article> {
-
+  extends EntityMapper<ArticleEntity, Article>
+  implements ObjectMapper<ArticleEntity, Article>
+{
   map(from: ArticleEntity): Article {
     if (from && from.id) {
       const article: Article = new Article();
@@ -34,5 +35,4 @@ export default class ArticleMapper
       return article;
     }
   }
-
 }

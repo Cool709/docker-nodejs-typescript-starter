@@ -1,4 +1,3 @@
-
 export default class Article {
   id: number;
   slug: string;
@@ -13,5 +12,4 @@ export default class Article {
   pinned: boolean;
   boosted: boolean;
   address: string;
-
 }

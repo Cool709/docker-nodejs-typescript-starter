@@ -1,10 +1,17 @@
 import { BaseController } from '../../../application/core/controllers/base';
 import UserMapper from '../domain/mappers/UserMapper';
 import User from '../domain/models/User';
-import { ViewModel, ViewModelBuilder } from '../../../application/utils/ViewModel';
+import {
+  ViewModel,
+  ViewModelBuilder,
+} from '../../../application/utils/ViewModel';
 import AbstractUserRepository from '../repositories/abstract/AbstractUserRepository';
 import PayloadValidator from '../../../application/utils/PayloadValidator';
-import { buildRawError, buildError, httpCodes } from '../../../application/core/ErrorCodes';
+import {
+  buildRawError,
+  buildError,
+  httpCodes,
+} from '../../../application/core/ErrorCodes';
 import Session from '../domain/models/Session';
 import Jwt from 'jsonwebtoken';
 import { SECRET_KEY } from '../../../application/core/config/constants';
@@ -14,21 +21,22 @@ import Token from '../domain/models/Token';
 import TokenMapper from '../domain/mappers/TokenMapper';
 
 export default class UserController extends BaseController {
-
   viewModel: ViewModel;
 
-  constructor(private userMapper: UserMapper,
-              private userRepository: AbstractUserRepository,
-              private tokenMapper: TokenMapper) {
+  constructor(
+    private userMapper: UserMapper,
+    private userRepository: AbstractUserRepository,
+    private tokenMapper: TokenMapper
+  ) {
     super();
-    this.viewModel = new ViewModelBuilder()
-      .remove('password')
-      .build();
+    this.viewModel = new ViewModelBuilder().remove('password').build();
   }
 
   async index(): Promise<User[]> {
     try {
-      const users: User[] = this.userMapper.mapCollection(await this.userRepository.getAll());
+      const users: User[] = this.userMapper.mapCollection(
+        await this.userRepository.getAll()
+      );
       return this.viewModel.transformAll(users);
     } catch (e) {
       throw buildRawError(e);
@@ -42,7 +50,8 @@ export default class UserController extends BaseController {
       }
 
       const user: User = this.userMapper.map(
-        await this.userRepository.getByUsernameOrEmail(userOrEmail));
+        await this.userRepository.getByUsernameOrEmail(userOrEmail)
+      );
       if (user && user.comparePassword(password)) {
         const session: Session = new Session();
         const plainObj = JSON.parse(JSON.stringify(user));
@@ -53,7 +62,9 @@ export default class UserController extends BaseController {
         token.active = true;
         token.token = encoded;
         token.user = user;
-        await getRepository(TokenEntity).save(this.tokenMapper.reverseMap(token));
+        await getRepository(TokenEntity).save(
+          this.tokenMapper.reverseMap(token)
+        );
         session.user = user;
         session.token = encoded;
         return session;
@@ -88,8 +99,8 @@ export default class UserController extends BaseController {
       user.username = payload.username;
       user.status = 1;
       const created: User = this.userMapper.map(
-        await this.userRepository.create(
-          this.userMapper.reverseMap(user)));
+        await this.userRepository.create(this.userMapper.reverseMap(user))
+      );
       return this.viewModel.transform(created);
     } catch (e) {
       throw buildRawError(e);

@@ -5,8 +5,9 @@ import TokenEntity from '../../../../application/core/data/entities/TokenEntity'
 import UserMapper from './UserMapper';
 
 export default class TokenMapper
-  extends EntityMapper<TokenEntity, Token> implements ObjectMapper<TokenEntity, Token> {
-
+  extends EntityMapper<TokenEntity, Token>
+  implements ObjectMapper<TokenEntity, Token>
+{
   constructor(private userMapper: UserMapper) {
     super();
   }
@@ -34,8 +35,6 @@ export default class TokenMapper
       token.updatedAt = to.updatedAt;
       token.user = this.userMapper.reverseMap(to.user);
       return token;
-
     }
   }
-
 }

@@ -4,7 +4,6 @@ import { getRepository, Repository, InsertResult } from 'typeorm';
 import TokenEntity from '../../../application/core/data/entities/TokenEntity';
 
 export default class UserRepository implements AbstractUserRepository {
-
   private repository: Repository<UserEntity>;
 
   constructor() {
@@ -34,20 +33,20 @@ export default class UserRepository implements AbstractUserRepository {
     if (foundToken) {
       return foundToken.user;
     }
-
   }
 
   async getByUsernameOrEmail(usernameOrEmail: string): Promise<UserEntity> {
     return await this.repository.findOne({
       where: {
-        $or: [{
-          username: usernameOrEmail,
-        }, {
-          email: usernameOrEmail,
-        }],
+        $or: [
+          {
+            username: usernameOrEmail,
+          },
+          {
+            email: usernameOrEmail,
+          },
+        ],
       },
     });
-
   }
-
 }
